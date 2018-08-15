@@ -6,6 +6,7 @@ var DeploymentLogsSchema = new Schema({
     branch: String,
     status: Boolean,
     commit_id: String,
+    payload: Object,
     created_at: Date,
     updated_at: Date
 });
