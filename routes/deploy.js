@@ -6,6 +6,6 @@ var deploy = require('../controllers/deploy');
 
 router
 //.get('/', deploy.status)
-    .post('/', deploy.deploy, deploy.save);
+    .post('/:serviceName', deploy.check, deploy.make, deploy.save);
 
 module.exports = router;
