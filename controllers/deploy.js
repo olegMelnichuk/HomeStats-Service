@@ -25,7 +25,7 @@ exports.make = function(req, res, next) {
     var projectPath = config.get('projectPath');
     var gitAutomation = config.get('gitAutomation');
     var serviceName = req.params.serviceName;
-    if (shell.exec(projectPath + 'deploy.sh ' + serviceName + ' ' + gitAutomation[serviceName].projectPath + ' &>> deployLog.log').code == 0) { //
+    if (shell.exec('bash ' + projectPath + 'deploy.sh ' + serviceName + ' ' + gitAutomation[serviceName].projectPath + ' > ' + projectPath + 'deployLog.log').code == 0) {
         var payload = req.body.payload;
         var data = new DeploymentLogs({
             project: serviceName,

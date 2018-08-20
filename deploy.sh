@@ -4,6 +4,7 @@
 # The service name
 SERVICE=$1
 SERVICE_FOLDER=$2
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
 
 #actions to stop the server and write the proper log
 stop_service () {
@@ -15,16 +16,13 @@ stop_service () {
                 echo "waiting to stop $SERVICE service $i seconds"
                 sleep 1;
                 if [ "`systemctl is-active $SERVICE`" != "active" ]; then
-                    done
+                    break
                 fi
                 if [ $i = 5 ]; then
                     echo "fail to stop the $SERVICE service, will exiting with exitСode:1"
                     exit 1
                 fi
             done
-        #while [ "`systemctl is-active $SERVICE`" = "active" ]; do
-        #    sleep 1; 
-        #done
         echo "The $SERVICE service has been stopped, start to fetch new changes"
     else
         echo "The $SERVICE service is not running, start to fetch new changes"
@@ -41,17 +39,13 @@ start_service () {
             echo "waiting to start $SERVICE service $i seconds"
             sleep 1;
             if [ "`systemctl is-active $SERVICE`" = "active" ]; then
-                done
+                break
             fi
             if [ $i = 5 ]; then
                 echo "fail to start the $SERVICE service, exiting with exitCode:1"
                 exit 1
             fi
         done
-
-        #while [ "`systemctl is-active $SERVICE`"!="active" ]; do
-        #    sleep 1; 
-        #done
         echo "The $SERVICE service has been started, enjoy!"
     else
         echo "The $SERVICE service is running, enjoy!"
@@ -65,5 +59,7 @@ deploy_code () {
     exit 0
 }
 
+#runninf the scope of functions
+echo "-------------- $DATE -------------";
 stop_service
 deploy_code
