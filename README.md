@@ -1,7 +1,8 @@
 # HomeStats-Service
 This service called to help maintain the other projects.
 For now implemented:
- * github auto deployment on push event. As a result you will be able to set post url: http://_domain_:_port_/deploy/_serviceName_
+ * github auto deployment on push event. As a result you will be able to set the url: http://_domain_:_port_/deploy/_serviceName_ and set the secret key to authorize access for GitHub settings.
+
  * TBA
 
 ## Getting Started
@@ -31,7 +32,7 @@ Also there is example of config file (do not forget to set NODE_ENV=_configFilen
 ```
 
 ### Prerequisites
-To create the service in OS i have used systremctl utility with help of next article:
+To create the service in OS I have used systremctl utility with help of next article:
 * [Making Node.js service always alive on Ubuntu Server](https://hackernoon.com/making-node-js-service-always-alive-on-ubuntu-server-e20c9c0808e4)
 
 ## Contributing
