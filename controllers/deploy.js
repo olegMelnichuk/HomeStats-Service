@@ -26,15 +26,15 @@ exports.make = function(req, res, next) {
     var projectPath = config.get('projectPath');
     var gitAutomation = config.get('gitAutomation');
     var serviceName = req.params.serviceName;
-    var payload = req.body.payload;
-    if (payload && payload.length != 0) {
+    var repository = req.body.repository.default_branch;
+    if (repository && repository.length != 0) {
         if (shell.exec('bash ' + projectPath + 'deploy.sh ' + serviceName + ' ' + gitAutomation[serviceName].projectPath + ' > ' + projectPath + 'deployLog.log').code == 0) {
             var data = new DeploymentLogs({
                 project: serviceName,
-                branch: payload.repository.default_branch,
+                branch: repository,
                 status: true,
-                commit_id: payload.commits[0].id,
-                payload: payload,
+                commit_id: req.body.commits[0].id,
+                payload: req.body,
                 created_at: new Date().getTime(),
                 updated_at: new Date().getTime()
             });
