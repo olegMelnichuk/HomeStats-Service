@@ -42,10 +42,10 @@ exports.make = function(req, res, next) {
             console.log('Updates were deployed successfully');
             next();
         } else {
-            res.status(200).send({ message: 'Testing is ok' });
+            res.status(500).send({ message: 'Deployment bash script got failed please check the deployLog.log file' });
         }
     } else {
-        res.status(500).send({ message: 'Deployment bash script got failed please check the deployLog.log file' });
+        res.status(200).send({ message: 'Testing is ok' });
     }
 };
 
