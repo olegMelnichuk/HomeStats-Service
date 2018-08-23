@@ -27,8 +27,22 @@ exports.make = function(req, res, next) {
     var gitAutomation = config.get('gitAutomation');
     var serviceName = req.params.serviceName;
     var repository = req.body.repository.default_branch;
+
     if (repository && repository.length != 0) {
-        if (shell.exec('bash ' + projectPath + 'deploy.sh ' + serviceName + ' ' + gitAutomation[serviceName].projectPath + ' > ' + projectPath + 'deployLog.log').code == 0) {
+        if (process.env.NODE_ENV != 'prod' || process.env.IS_TEST) {
+            var data = new DeploymentLogs({
+                project: serviceName,
+                branch: repository,
+                status: false,
+                commit_id: req.body.commits[0].id,
+                payload: req.body,
+                created_at: new Date().getTime(),
+                updated_at: new Date().getTime()
+            });
+            res.data = data;
+            console.log('Updates were not deployed it is not prod or test is running');
+            next();
+        } else if (shell.exec('bash ' + projectPath + 'deploy.sh ' + serviceName + ' ' + gitAutomation[serviceName].projectPath + ' > ' + projectPath + 'deployLog.log').code == 0) {
             var data = new DeploymentLogs({
                 project: serviceName,
                 branch: repository,
